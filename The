@@ -1,0 +1,42 @@
+
+1. **Configuration File Loading Issues**: ``` [INF] 24-07-22 19:51:31 未能正确加载配置文件或配置文件不存在，使用默认配置 [app.go:449] ``` This indicates that 
+   the configuration file located at `/root/.xray/xpoc/xpoc-config.yaml` either does not exist or could not be loaded properly. The system is falling back to 
+   default configurations.
+   **Solution**: Verify that the configuration file exists at the specified location. Ensure that the file has the correct permissions and format. If the file does not exist, you may need to create it based on the default configuration template.
+
+2. **Default Reverse Connection Unavailable**:
+   ```
+   [INF] 24-07-22 19:51:31 poc:reverse-registry: 默认反连不可用 原因: 没有配置默认反连 [registry.go:13]
+   ```
+   This suggests that the default reverse connection is unavailable because it is not configured.
+
+   **Solution**: Check the configuration file for settings related to reverse connections and ensure that they are properly configured.
+
+3. **DNSLOG.CN Unavailable**:
+   ```
+   [INF] 24-07-22 19:51:46 poc:reverse-client-dnslog: DNSLOG.CN不可用 原因: Get "http://dnslog.cn/getdomain.php": dial tcp: lookup dnslog.cn: i/o timeout [dnslogcn.go:39]
+   ```
+   This message indicates that the DNSLOG.CN service is unavailable due to a timeout.
+
+   **Solution**: Check your network connectivity and ensure that the DNSLOG.CN service is reachable. This may involve verifying DNS settings or network firewall rules.
+
+4. **New Reverse Client Unavailable**:
+   ```
+   [INF] 24-07-22 19:51:46 poc:reverse-client-new: 新反连客户端不可用 原因: 没有开启新反连平台 [client.go:18]
+   ```
+   This indicates that the new reverse connection client is unavailable because it is not enabled.
+
+   **Solution**: Enable the new reverse connection client in the configuration file if it is required for your use case.
+
+5. **Panic Error**:
+   ```
+   [ERR] 24-07-22 19:52:16 poc:reverse-client-dnslog: panic: interface conversion: reverse.ClientIface is nil, not *reverse.DNSLogCNClient [dnslogcn.go:31]
+   ```
+   This error suggests a type assertion failure where the `reverse.ClientIface` is `nil`.
+
+   **Solution**: This might be due to the earlier configuration or connectivity issues. Ensure that the reverse connection clients are properly configured and that the services they depend on are reachable.
+
+6. **General Recommendations**:
+   - **Verify Configurations**: Ensure all necessary configurations are correctly set in the `xpoc-config.yaml` file.
+   - **Check Network Connectivity**: Make sure that your system can reach the external services like DNSLOG.CN.
+   - **Consult Documentation**: Refer to the official
